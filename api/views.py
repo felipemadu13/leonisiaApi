@@ -49,3 +49,46 @@ def get_servicos_by_id(request, id):
     elif request.method == 'DELETE':
         servico.delete()
         return Response({"message": "Servico excluído com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['GET', 'POST'])
+def get_servicos_realizados(request):
+    if request.method == "GET":
+        servicos_realizados = ServicoRealizado.objects.all()
+        serializer = ServicoRealizadoSerializer(servicos_realizados, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        novo_servico_realizado = request.data
+        serializer = ServicoRealizadoSerializer(data=novo_servico_realizado)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def get_servicos_realizados_by_id(request, id):
+    try:
+        servico_realizado = ServicoRealizado.objects.get(pk=id)
+    except ServicoRealizado.DoesNotExist:
+        return Response({"error": "Servico realizado não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ServicoRealizadoSerializer(servico_realizado)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        dados_atualizados = request.data
+        serializer = ServicoRealizadoSerializer(servico_realizado, data=dados_atualizados)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        servico_realizado.delete()
+        return Response({"message": "Servico realizado excluído com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
