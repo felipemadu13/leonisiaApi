@@ -18,6 +18,13 @@ class ServicoRealizadoSerializer(serializers.ModelSerializer):
         model = ServicoRealizado
         fields = ['id', 'data', 'servico']
 
+class ServicoRealizadoGetSerializer(serializers.ModelSerializer):
+    servico = ServicoSerializer()
+
+    class Meta:
+        model = ServicoRealizado
+        fields = ['id', 'data', 'servico']
+
 class TransacoesSerializer(serializers.ModelSerializer):
     servicosRealizados = ServicoRealizadoSerializer(many=True, required=False)
 

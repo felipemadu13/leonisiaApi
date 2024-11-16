@@ -55,7 +55,7 @@ def get_servicos_by_id(request, id):
 def get_servicos_realizados(request):
     if request.method == "GET":
         servicos_realizados = ServicoRealizado.objects.all()
-        serializer = ServicoRealizadoSerializer(servicos_realizados, many=True)
+        serializer = ServicoRealizadoGetSerializer(servicos_realizados, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
@@ -77,7 +77,7 @@ def get_servicos_realizados_by_id(request, id):
         return Response({"error": "Servico realizado não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = ServicoRealizadoSerializer(servico_realizado)
+        serializer = ServicoRealizadoGetSerializer(servico_realizado)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'PUT':
