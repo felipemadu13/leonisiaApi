@@ -50,6 +50,7 @@ def get_servicos_by_id(request, id):
         servico.delete()
         return Response({"message": "Servico excluído com sucesso."}, status=status.HTTP_204_NO_CONTENT)
     
+# View para listar e criar ServicosRealizados
 @api_view(['GET', 'POST'])
 def get_servicos_realizados(request):
     if request.method == "GET":
@@ -62,11 +63,13 @@ def get_servicos_realizados(request):
         serializer = ServicoRealizadoSerializer(data=novo_servico_realizado)
 
         if serializer.is_valid():
+            # Não é necessário enviar 'descricao' ou 'preco' no POST, pois já estão no Servico
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# View para obter, atualizar ou excluir um ServicoRealizado específico
 @api_view(['GET', 'PUT', 'DELETE'])
 def get_servicos_realizados_by_id(request, id):
     try:
@@ -83,6 +86,7 @@ def get_servicos_realizados_by_id(request, id):
         serializer = ServicoRealizadoSerializer(servico_realizado, data=dados_atualizados)
 
         if serializer.is_valid():
+            # Não é necessário enviar 'descricao' ou 'preco' no PUT, pois já estão no Servico
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         
@@ -91,4 +95,3 @@ def get_servicos_realizados_by_id(request, id):
     elif request.method == 'DELETE':
         servico_realizado.delete()
         return Response({"message": "Servico realizado excluído com sucesso."}, status=status.HTTP_204_NO_CONTENT)
-

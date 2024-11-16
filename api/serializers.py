@@ -11,9 +11,11 @@ class ServicoSerializer(serializers.ModelSerializer):
         }
 
 class ServicoRealizadoSerializer(serializers.ModelSerializer):
+    servico = serializers.PrimaryKeyRelatedField(queryset=Servico.objects.all())
+
     class Meta:
         model = ServicoRealizado
-        fields = ['id', 'nome_servico', 'descricao', 'preco', 'data']
+        fields = ['id', 'servico', 'data']
         extra_kwargs = {
             'id': {'read_only': True}
         }
