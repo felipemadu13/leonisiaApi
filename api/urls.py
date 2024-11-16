@@ -6,6 +6,10 @@ from api import views
 urlpatterns = [
     path('servicos', views.get_servicos, name='get_all_servicos'),
     path('servicos/<int:id>', views.get_servicos_by_id, name='get_servicos_by_id'),
+
     path('servicosrealizados', views.get_servicos_realizados, name='get_all_servicos_realizados'),
     path('servicosrealizados/<int:id>', views.get_servicos_realizados_by_id, name='get_servicos_by_id'),
+
+    path('transacoes', views.get_transacoes, name='transacoes'),
+    path('transacoes/<int:id>', views.get_transacoes_by_id, name='transacoes_id'),
 ]

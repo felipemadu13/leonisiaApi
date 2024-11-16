@@ -21,3 +21,25 @@ class ServicoRealizado(models.Model):
             f"Preço: R${self.servico.preco:.2f}, "
             f"Data: {self.data.strftime('%d/%m/%Y')}"
         )
+
+class Transacoes(models.Model):
+    TIPO_CHOICES = [
+        ('entrada', 'entrada'),
+        ('saida', 'saida'),
+    ]
+
+    METODO_PAGAMENTO_CHOICES = [
+        ('cartao_credito', 'Cartão de Crédito'),
+        ('dinheiro', 'Dinheiro'),
+        ('pix', 'PIX'),
+        ('transferencia', 'Transferência Bancária'),
+    ]
+
+    tipo = models.CharField(max_length=7, choices=TIPO_CHOICES)
+    data = models.DateTimeField()
+    metodoPagamento = models.CharField(max_length=20, choices=METODO_PAGAMENTO_CHOICES)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    servicosRealizados = models.ManyToManyField('ServicoRealizado', blank=True)
+
+    def __str__(self):
+        return f"{self.tipo} - {self.valor} - {self.data} - {self.get_metodoPagamento_display()}"
