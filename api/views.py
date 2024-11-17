@@ -96,8 +96,6 @@ def get_servicos_realizados_by_id(request, id):
 
 
 # TRANSAÇÕES
-
-
 @api_view(['GET', 'POST'])
 def get_transacoes(request):
     if request.method == "GET":
@@ -107,32 +105,14 @@ def get_transacoes(request):
 
     elif request.method == 'POST':
         nova_transacao = request.data
-        servicos_realizados_data = nova_transacao.pop('servicosRealizados', [])
-
         serializer = TransacoesSerializer(data=nova_transacao)
-        
+
         if serializer.is_valid():
             transacao = serializer.save()
-
-            for servico_data in servicos_realizados_data:
-                try:
-                    servico = Servico.objects.get(id=servico_data['servico']) 
-                except ObjectDoesNotExist:
-                    return Response(
-                        {"error": f"Serviço com ID {servico_data['servico']} não encontrado."},
-                        status=status.HTTP_404_NOT_FOUND
-                    )
-                
-                servico_realizado = ServicoRealizado.objects.create(
-                    servico=servico,
-                    data=servico_data['data']
-                )
-                transacao.servicosRealizados.add(servico_realizado)
-
-            transacao.save() 
             return Response(TransacoesSerializer(transacao).data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     
 @api_view(['GET', 'PUT', 'DELETE'])
