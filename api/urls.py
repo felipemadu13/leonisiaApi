@@ -12,9 +12,9 @@ from .views import user_logout
 from .views import user_register
 
 urlpatterns = [
-    path('login/', user_login, name='login'),   
-    path('logout/', user_logout, name='logout'), 
-    path('register/', user_register, name='register'),       
+    path('register/', user_register, name='register'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),     
      
     path('servicos', views.get_servicos, name='get_all_servicos'),
     path('servicos/<int:id>', views.get_servicos_by_id, name='get_servicos_by_id'),
