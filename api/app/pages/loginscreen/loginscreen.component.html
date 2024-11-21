@@ -1,0 +1,21 @@
+<div class="login-screen-container">
+    <div class="login-container">
+      <div class="logo">
+        <img class="img" src="/assets/img/logo.png" alt="logo" />
+      </div>
+      <div class="email-container">
+        <span>Usuário:</span>
+        <input [(ngModel)]="email" type="email" placeholder="Digite o usuário" required>
+      </div>
+      <div class="password-container">
+        <span>Senha:</span>
+        <input [(ngModel)]="password" type="password" placeholder="Digite a senha" required>
+      </div>
+      <button type="button" (click)="goToHome()" class="login-button">Entrar</button>
+      <div class="links">
+        <!-- <a href="/recuperar">Esqueceu a senha?</a>
+        <a href="/registrar">Não possui um usuário?</a> -->
+      </div>
+    </div>
+  </div>
+  

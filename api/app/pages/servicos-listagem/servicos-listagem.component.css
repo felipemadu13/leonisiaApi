@@ -1,0 +1,105 @@
+.screen {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.container {
+  width: 100%;
+  flex: 1;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+h2 {
+  font-size: 24px;
+  color: #4b6043;
+  margin-bottom: 20px;
+}
+
+.servico-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.servico-item {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  background-color: #A0AE9E;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.servico-item.header {
+  font-weight: bold; /* Estilo para o cabeçalho */
+  background-color: #4b6043; /* Cor diferente para o cabeçalho */
+}
+
+.servico-nome,
+.servico-preco,
+.servico-actions {
+  flex: 1; /* Permite que cada item dentro do serviço ocupe um espaço igual */
+  text-align: center; /* Centraliza o texto de cada item */
+}
+
+.servico-nome {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.servico-preco {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.servico-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center; /* Centraliza os botões de ação */
+  color: white;
+
+}
+
+.btn-deletar {
+  background-color: #F49191;
+  border: none;
+  padding: 10px;
+  color: white;
+  border-radius: 8px;
+}
+
+.btn-editar {
+  background-color: #4b6043;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 8px;
+}
+
+.btn-cadastrar {
+  margin-top: 20px;
+  background-color: #4b6043;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+}
+
+.btn-cadastrar:hover {
+  background-color: #3a4934;
+}
+
+.btn-primary {
+  background-color: #657D65;
+  border: none;
+  border-radius: 0;
+  padding: 0.4rem 1.5rem;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* servico-lista.component.css */
+

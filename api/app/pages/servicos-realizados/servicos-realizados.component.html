@@ -1,0 +1,73 @@
+src\app\pages\servicos-realizados\servicos-realizados.component.html
+
+<div class="screen">
+  <app-siderbar-menu></app-siderbar-menu>
+  
+  <div class="container mt-5">
+    <h2 class="mb-4">Serviços Realizados</h2>
+    <table class="table table-striped" *ngIf="servicosRealizados?.length; else noData">
+      <thead>
+        <tr>
+          <th>Serviço</th>
+          <th>Data</th>
+          <th>Preço</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let realizado of servicosRealizados">
+          <ng-container *ngIf="realizado.servico">
+            <td>{{ realizado.id }}</td>
+            <td>{{ realizado.servico?.data | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ realizado.servico?.preco | currency: 'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noData>
+      <p>Nenhum serviço realizado disponível.</p>
+    </ng-template>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="screen">
+  <app-siderbar-menu></app-siderbar-menu>
+  
+  <div class="container mt-5">
+    <h2 class="mb-4">Serviços Realizados</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Serviço</th>
+          <th>Data</th>
+          <th>Preço</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let realizado of servicosRealizados">
+          <td>{{ realizado.id}}</td>
+          <td>{{ realizado.servico.data | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ realizado.servico.preco | currency: 'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+ -->
+
+

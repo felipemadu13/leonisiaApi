@@ -1,0 +1,78 @@
+<div class="screen">
+    <app-siderbar-menu></app-siderbar-menu>
+    <div class="dashboard-container">
+        <div class="saldo-geral">
+            <div class="saldo-data">
+                <span class="saldo-title">Saldo Geral</span>
+                <span class="saldo-value">{{ dashboard.saldoGeral | currency: 'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
+            </div>
+            <div id="barChart">
+                <canvas baseChart [data]="dashboard.BarChartData" [options]="barChartOptions">
+                </canvas>
+            </div>
+        </div>
+        
+        <div class="rendimentos">
+            <div class="entrada-saida">
+                <div class="entrada">
+                    <div class="entrada-header">
+                        <span>Entrada</span>
+                        <select class="select" name="" id="entrada" [(ngModel)]="entrada">
+                            <option value="diario">Diário</option>
+                            <option value="mensal">Mensal</option>
+                        </select>
+                    </div>
+                    <div class="value">
+                        <span *ngIf="entrada === 'diario'">{{ dashboard.entradaDiario | currency:
+                            'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
+                        <span *ngIf="entrada === 'mensal'">{{ dashboard.entradaMensal | currency:
+                            'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
+                    </div>
+                </div>
+                <div class="saida">
+                    <div class="saida-header">
+                        <span>Saída</span>
+                        <select class="select" name="" id="" [(ngModel)]="saida">
+                            <option value="diario">Diário</option>
+                            <option value="mensal">Mensal</option>
+                        </select>
+                    </div>
+                    <div class="value">
+                        <span *ngIf="saida === 'diario'">{{ dashboard.saidaDiario | currency:
+                            'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
+                        <span *ngIf="saida === 'mensal'">{{ dashboard.saidaMensal | currency:
+                            'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            <div class="balanco">
+                <div class="balanco-header">
+                    <span>Balanço</span>
+                    <select class="select-balanco" name="" id="" [(ngModel)]="balanco">
+                        <option value="diario">Diário</option>
+                        <option value="mensal">Mensal</option>
+                    </select>
+                </div>
+                
+                <div class="value-balanco">
+                    <span *ngIf="balanco === 'diario'">{{ dashboard.balancoDiario | currency:
+                        'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
+                    <span *ngIf="balanco === 'mensal'">{{ dashboard.balancoMensal | currency:
+                        'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="servi-realizados">
+            <div class="space">
+                <span routerLink="/servicos-realizados" routerLinkActive="active" class="servicos-realizados-title">Serviços realizados em {{ currentDate | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <div id="pieChart">
+                <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions">
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>

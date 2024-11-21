@@ -85,40 +85,6 @@ def get_servicos(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# @login_required
-# def get_servicos(request):
-#     if request.method == "GET":
-#         servicos = Servico.objects.all()
-#         serializer = ServicoSerializer(servicos, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method == 'POST':
-#         novo_servico = request.data
-#         serializer = ServicoSerializer(data=novo_servico)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(['GET', 'POST'])
-# def get_servicos(request):
-#     if request.method == "GET":
-#         servicos = Servico.objects.all()
-#         serializer = ServicoSerializer(servicos, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method == 'POST':
-#         novo_servico = request.data
-#         serializer = ServicoSerializer(data=novo_servico)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 @api_view(['GET', 'PUT', 'DELETE'])
 def get_servicos_by_id(request, id):
     try:

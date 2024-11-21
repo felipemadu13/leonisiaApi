@@ -1,0 +1,85 @@
+<div class="screen">
+  <app-siderbar-menu></app-siderbar-menu>
+  <div class="container">
+    <div class="button_container">
+      <button class="headerBtn" (click)="selectTab('tudo')" [ngClass]="{'selected-tab': selectedTab === 'tudo'}">Tudo</button>
+      <button class="headerBtn" (click)="selectTab('entrada')" [ngClass]="{'selected-tab': selectedTab === 'entrada'}">Entrada</button>
+      <button class="headerBtn" (click)="selectTab('saida')" [ngClass]="{'selected-tab': selectedTab === 'saida'}">Saída</button>
+    </div>
+
+    <ul class="transacao_container">
+      <div class="transacao_header">
+        <strong>Data</strong>
+        <strong>Método de Pagamento</strong>
+        <strong>Valor</strong>
+        <strong>Tipo</strong>
+      </div>
+      <li *ngFor="let transacao of paginatedTransacoes" class="transacao_data">
+        <p>{{ transacao.data | date:'dd/MM/yyyy' }}</p>
+        <p> {{ transacao.metodoPagamento }}</p>
+        <p>{{ transacao.valor | currency:'BRL' }}</p>
+        <p>{{ transacao.tipo }}</p>
+      </li>
+    </ul>
+
+    <button (click)="openModal()" class="nova_transacao">Nova Transação</button>
+
+    <div class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Próxima</button>
+    </div>
+
+    <button *ngIf="showModal" class="modal">
+      <div class="modal-content">
+        <h2>Adicionar Nova Transação</h2>
+
+        <label class="transaction_title_input" for="tipo">Tipo de Transação:</label>
+        <select id="tipo" [(ngModel)]="novaTransacao.tipo">
+          <option value="entrada">Entrada</option>
+          <option value="saida">Saída</option>
+        </select>
+
+        <label class="transaction_title_input" for="metodoPagamento">Método de Pagamento:</label>
+        <select id="metodoPagamento" [(ngModel)]="novaTransacao.metodoPagamento">
+          <option value="dinheiro">Dinheiro</option>
+          <option value="pix">PIX</option>
+          <option value="cartao_credito">Cartão de Crédito</option>
+        </select>
+
+        <label class="transaction_title_input" for="data">Data:</label>
+        <input class="calendario" type="date" id="data" [(ngModel)]="novaTransacao.data">
+
+        <div *ngIf="novaTransacao.tipo === 'entrada'">
+          <h3>Serviços Realizados</h3>
+
+          <div *ngFor="let servico of novaTransacao.servicosRealizados">
+            <p><strong>Nome:</strong> {{ servico.servico.nome }} | <strong>Descrição:</strong> {{ servico.servico.descricao }} |
+              <strong>Preço:</strong> {{ servico.servico.preco | currency:'BRL' }}
+            </p>
+          </div>
+
+          <h4>Adicionar Serviço</h4>
+          <label for="nomeServico">Nome:</label>
+          <select id="nomeServico" [(ngModel)]="novoServico.nome">
+            <option *ngFor="let servico of servicos" [value]="servico.nome">{{ servico.nome }}</option>
+          </select>
+
+          <!-- <label for="descricaoServico">Descrição:</label>
+          <input type="text" id="descricaoServico" [(ngModel)]="novoServico.descricao">
+
+          <label for="precoServico">Preço:</label>
+          <input type="number" id="precoServico" [(ngModel)]="novoServico.preco"> -->
+
+          <button (click)="addServico()">Adicionar Serviço</button>
+        </div>
+
+        <label for="valor">Valor Total:</label>
+        <input type="number" id="valor" [(ngModel)]="novaTransacao.valor">
+
+        <button (click)="addTransacao()">Adicionar</button>
+        <button (click)="closeModal()">Cancelar</button>
+      </div>
+    </button>
+  </div>
+</div>
