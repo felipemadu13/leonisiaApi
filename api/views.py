@@ -139,3 +139,25 @@ def get_transacoes_by_id(request, id):
     elif request.method == 'DELETE':
         transacao.delete()
         return Response({"message": "Transação excluída com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['GET'])
+def get_servicos_e_transacoes(request):
+    servicos_realizados = ServicoRealizado.objects.all()
+    resultado = []
+
+    for servico_realizado in servicos_realizados:
+        transacoes = Transacoes.objects.filter(servicosRealizados=servico_realizado)
+        
+        # Serializa as transações
+        transacoes_serializer = TransacoesSerializer(transacoes, many=True)
+        
+        # Serializa o serviço realizado
+        servico_realizado_serializer = ServicoRealizadoGetSerializer(servico_realizado)
+        
+        # Adiciona o serviço realizado com as transações associadas
+        resultado.append({
+            'servico_realizado': servico_realizado_serializer.data,
+            'transacoes': transacoes_serializer.data
+        })
+
+    return Response(resultado, status=200)
