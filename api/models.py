@@ -45,3 +45,4 @@ class Transacoes(models.Model):
 
     def __str__(self):
         return f"{self.tipo} - {self.valor} - {self.data} - {self.get_metodoPagamento_display()}"
+    
