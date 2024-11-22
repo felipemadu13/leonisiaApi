@@ -1,1 +1,81 @@
-myenv/
+# Sistema operacional
+*.DS_Store           # macOS
+*.swp                # Linux e Unix (arquivos temporários de editores como Vim)
+Thumbs.db            # Windows
+
+# Diretórios do Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Ambiente virtual
+env/
+venv/
+ENV/
+env.bak/
+.venv/
+
+# Arquivos e Logs de configuração local
+*.log
+*.pot
+*.pydevproject
+*.project
+*.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Migrations do Django (se você quiser gerar automaticamente em cada ambiente)
+*.sqlite3             # Banco de dados SQLite
+db.sqlite3
+db.sqlite3-journal
+
+# Diretórios e configurações do Django
+media/               # Arquivos enviados pelo usuário (apenas localmente)
+staticfiles/         # Arquivos estáticos coletados
+local_settings.py    # Configurações específicas do ambiente
+
+# Arquivos de teste e cache
+.tox/
+.coverage
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Configuração de containers ou IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Chaves e configurações sensíveis
+*.key
+secrets.json
+config.json
+
+# Node.js e pacotes front-end (se usar)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Arquivos do sistema
+*.lock
+*.tmp
+*.pid
+
+# Arquivos relacionados ao Docker
+docker-compose.override.yml
+.dockerignore
+
+# Arquivos de Build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Arquivos de backup
+*.bak
+*.swp
+*.tmp

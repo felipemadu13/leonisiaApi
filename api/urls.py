@@ -20,8 +20,10 @@ urlpatterns = [
     # Serviços Realizados
     path('servicosrealizados/', views.get_servicos_realizados, name='get_all_servicos_realizados'),
     path('servicosrealizados/<int:id>/', views.get_servicos_realizados_by_id, name='get_servicos_by_id'),
-
+    path('servicosrealizados/servicos-realizados-transacoes/', views.get_servicos_e_transacoes),
+    
     # Transações
     path('transacoes/', views.get_transacoes, name='transacoes'),
     path('transacoes/<int:id>/', views.get_transacoes_by_id, name='transacoes_id'),
+
 ]
