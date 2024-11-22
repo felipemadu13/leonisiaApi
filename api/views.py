@@ -68,6 +68,11 @@ def user_register(request):
 
     return JsonResponse({'error': 'Método não permitido.'}, status=405)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def dashboard_view(request):
+    return Response({'message': 'Bem-vindo ao Dashboard!'}, status=200)
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
