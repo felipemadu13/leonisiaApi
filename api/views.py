@@ -71,6 +71,7 @@ def user_register(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dashboard_view(request):
+    print(f"Requisição recebida de: {request.user}")
     return Response({'message': 'Bem-vindo ao Dashboard!'}, status=200)
 
 
