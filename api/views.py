@@ -1,29 +1,94 @@
-from django.shortcuts import render
+# api/views.py
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import JsonResponse
-from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Servico
-from .serializers import *
+from .models import Servico, ServicoRealizado, Transacoes
+from .serializers import ServicoSerializer, ServicoRealizadoSerializer, ServicoRealizadoGetSerializer, TransacoesSerializer
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from rest_framework.authtoken.models import Token
+
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+@csrf_exempt
+def user_login(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+            password = data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                token, _ = Token.objects.get_or_create(user=user)  # Gera um token se necessário
+                print(f"Usuário autenticado com sucesso: {user}")  # Log de depuração
+                return JsonResponse({'message': 'Login realizado com sucesso.', 'token': token.key})
+            else:
+                print("Falha na autenticação: Nome de usuário ou senha incorretos.")  # Log de depuração
+                return JsonResponse({'error': 'Nome de usuário ou senha incorretos.'}, status=400)
+        except (KeyError, json.JSONDecodeError):
+            return JsonResponse({'error': 'Dados inválidos. Certifique-se de enviar "username" e "password".'}, status=400)
+    return JsonResponse({'error': 'Método não permitido.'}, status=405)
+
+@csrf_exempt
+def user_logout(request):
+    
+    if request.method == 'POST':
+        logout(request)
+        return JsonResponse({'message': 'Logout realizado com sucesso.'})
+
+    return JsonResponse({'error': 'Método não permitido.'}, status=405)
+
+
+@csrf_exempt
+def user_register(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data['username']
+            password = data['password']
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'error': 'Usuário já existe.'}, status=400)
+            user = User.objects.create_user(username=username, password=password)
+            user.save()
+            return JsonResponse({'message': 'Usuário registrado com sucesso.'}, status=201)
+        except KeyError:
+            return JsonResponse({'error': 'Dados inválidos. Certifique-se de enviar "username" e "password".'}, status=400)
+
+    return JsonResponse({'error': 'Método não permitido.'}, status=405)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def dashboard_view(request):
+    print(f"Requisição recebida de: {request.user}")
+    return Response({'message': 'Bem-vindo ao Dashboard!'}, status=200)
+
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def get_servicos(request):
-    if request.method == "GET":
+    print(f"Requisição recebida com método {request.method} do usuário {request.user}")    
+    if request.method == 'GET':
         servicos = Servico.objects.all()
         serializer = ServicoSerializer(servicos, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        novo_servico = request.data
-        serializer = ServicoSerializer(data=novo_servico)
-
+        serializer = ServicoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
