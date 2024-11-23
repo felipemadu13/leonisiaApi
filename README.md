@@ -35,7 +35,7 @@ As dependências estão especificadas no arquivo `requirements.txt` e podem ser 
    - Este comando baixa o código do repositório remoto para sua máquina.
    ```bash
    git clone https://github.com/felipemadu13/leonisiaApi
-   cd back
+   cd leonisiaApi
    ```
 
 2. **Crie um ambiente virtual:**
